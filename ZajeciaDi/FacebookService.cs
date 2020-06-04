@@ -6,6 +6,13 @@ namespace ZajeciaDi
     {
         private List<Person> AllPeople { get; set; } = new List<Person>();
 
+        private ICensor _censor;
+
+        public FacebookService(ICensor censor)
+        {
+            _censor = censor;
+        }
+
         public void Register(Person person)
         {
             AllPeople.Add(person);
@@ -13,7 +20,7 @@ namespace ZajeciaDi
 
         public void PostContent(Person person, string text)
         {
-            if (Censor.IsAcceptable(text))
+            if (_censor.IsAcceptable(text))
             {
                 person.Contents.Add(new Content
                 {

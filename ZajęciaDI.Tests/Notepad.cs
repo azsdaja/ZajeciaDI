@@ -7,10 +7,18 @@ namespace ZajęciaDI.Tests
 {
     public class Notepad
     {
+        private class CensorshipApiMock : ICensorshipApi
+        {
+            public bool IsValid(string text)
+            {
+                return true;
+            }
+        }
+
         [Test]
         public void Test()
         {
-            var facebookService = new FacebookService();
+            var facebookService = new FacebookService(new Censor(new CensorshipApiMock()));
 
             var firstPerson = new Person();
             facebookService.Register(firstPerson);

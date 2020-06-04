@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ZajeciaDi
 {
-    public static class Censor
+    public class Censor : ICensor
     {
         private static List<string> _badWords = new List<string>
         {
@@ -12,12 +12,27 @@ namespace ZajeciaDi
             "głupek"
         };
 
-        public static bool IsAcceptable(string text)
+        private ICensorshipApi _censorshipApi;
+
+        public Censor(ICensorshipApi censorshipApi)
         {
-            var censorshipApi = new CensorshipApi();
-            bool isValidExternal = censorshipApi.IsValid(text);
+            _censorshipApi = censorshipApi;
+        }
+
+        public bool IsAcceptable(string text)
+        {
+            bool isValidExternal = _censorshipApi.IsValid(text);
 
             return isValidExternal && _badWords.Any(text.Contains);
         }
+
+        /*
+         * 1. zmodyfikować kod tak, żeby można było pisać testy dodawania treści przez użytkowników BEZ UŻYWANIA RZECZYWISTEGO
+         * CensorshipApi.
+         *
+         * wskazówka — użyć interfejsu.
+         *
+         * dla chętnych — nie modyfikować CensorshipApi.
+         */
     }
 }
