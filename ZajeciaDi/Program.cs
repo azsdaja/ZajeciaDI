@@ -6,7 +6,8 @@ namespace ZajeciaDi
     {
         static void Main(string[] args)
         {
-            
+
+            var realFacebookService = new FacebookService();
 
             
         }

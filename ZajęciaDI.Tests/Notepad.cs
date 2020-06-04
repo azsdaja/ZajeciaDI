@@ -28,5 +28,17 @@ namespace ZajęciaDI.Tests
 
             Assert.That(firstPerson.Contents.Count, Is.EqualTo(1));
         }
+
+        // Przykładowa funkcja nieprymitywna, a którą można pozostawić jako statyczną - matematyka się nie zmienia
+        public static int Power(int baza, int power)
+        {
+            int wynik = 1;
+            for (int i = 0; i < power; i++)
+            {
+                wynik = wynik * baza;
+            }
+
+            return wynik;
+        }
     }
 }

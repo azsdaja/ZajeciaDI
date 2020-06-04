@@ -8,5 +8,10 @@ namespace ZajeciaDi
         public string LastName { get; set; }
         public List<Person> Friends { get; set; } = new List<Person>();
         public List<Content> Contents { get; set; } = new List<Content>();
+
+        public string FullName()
+        { 
+            return FirstName + " " + LastName;
+        }
     }
 }

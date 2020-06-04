@@ -14,9 +14,13 @@ namespace ZajeciaDi
 
         private ICensorshipApi _censorshipApi;
 
-        public Censor(ICensorshipApi censorshipApi)
+        public Censor(ICensorshipApi censorshipApi = null)
         {
             _censorshipApi = censorshipApi;
+            if (_censorshipApi == null)
+            {
+                _censorshipApi = new CensorshipApi();
+            }
         }
 
         public bool IsAcceptable(string text)
@@ -25,14 +29,5 @@ namespace ZajeciaDi
 
             return isValidExternal && _badWords.Any(text.Contains);
         }
-
-        /*
-         * 1. zmodyfikować kod tak, żeby można było pisać testy dodawania treści przez użytkowników BEZ UŻYWANIA RZECZYWISTEGO
-         * CensorshipApi.
-         *
-         * wskazówka — użyć interfejsu.
-         *
-         * dla chętnych — nie modyfikować CensorshipApi.
-         */
     }
 }
