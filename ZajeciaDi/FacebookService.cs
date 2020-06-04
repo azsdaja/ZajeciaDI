@@ -1,20 +1,19 @@
 ﻿using System.Collections.Generic;
+using Autofac;
 
 namespace ZajeciaDi
 {
     public class FacebookService
     {
+        private IContainer _container;
         private List<Person> AllPeople { get; set; } = new List<Person>();
 
-        private ICensor _censor;
+        // private ICensor _censor;
 
-        public FacebookService(ICensor censor = null)
+        public FacebookService(IContainer container)
         {
-            _censor = censor;
-            if (_censor == null)
-            {
-                _censor = new Censor();
-            }
+            // _censor = ;
+            _container = container;
         }
 
         public void Register(Person person)
@@ -24,7 +23,8 @@ namespace ZajeciaDi
 
         public void PostContent(Person person, string text)
         {
-            if (_censor.IsAcceptable(text))
+            var censor = _container.Resolve<ICensor>();
+            if (censor.IsAcceptable(text))
             {
                 person.Contents.Add(new Content
                 {

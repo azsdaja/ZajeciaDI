@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Autofac;
 
 namespace ZajeciaDi
 {
@@ -14,13 +15,10 @@ namespace ZajeciaDi
 
         private ICensorshipApi _censorshipApi;
 
-        public Censor(ICensorshipApi censorshipApi = null)
+        public Censor(IContainer container)
         {
-            _censorshipApi = censorshipApi;
-            if (_censorshipApi == null)
-            {
-                _censorshipApi = new CensorshipApi();
-            }
+            // _censorshipApi = censorshipApi;
+            _censorshipApi = container.Resolve<ICensorshipApi>();
         }
 
         public bool IsAcceptable(string text)
