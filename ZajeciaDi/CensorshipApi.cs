@@ -4,7 +4,7 @@ namespace ZajeciaDi
 {
     public class CensorshipApi
     {
-        public static bool IsValid(string text)
+        public bool IsValid(string text)
         {
             Thread.Sleep(1000);
             return text.Contains("Cześć");

@@ -14,7 +14,8 @@ namespace ZajeciaDi
 
         public static bool IsAcceptable(string text)
         {
-            bool isValidExternal = CensorshipApi.IsValid(text);
+            var censorshipApi = new CensorshipApi();
+            bool isValidExternal = censorshipApi.IsValid(text);
 
             return isValidExternal && _badWords.Any(text.Contains);
         }
