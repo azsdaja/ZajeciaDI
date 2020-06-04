@@ -6,7 +6,7 @@ namespace ZajeciaDi
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
 
             
         }
