@@ -2,7 +2,7 @@
 
 namespace ZajeciaDi
 {
-    public class CensorshipApi : ICensorshipApi
+    public class CensorshipApi
     {
         public bool IsValid(string text)
         {

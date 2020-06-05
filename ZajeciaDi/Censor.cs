@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Serilog;
 
 namespace ZajeciaDi
 {
@@ -12,22 +14,47 @@ namespace ZajeciaDi
             "głupek"
         };
 
-        private ICensorshipApi _censorshipApi;
+        private List<string> _acceptedTextsCache = new List<string>();
 
-        public Censor(ICensorshipApi censorshipApi = null)
+        private ICensorshipApi _censorshipApi;
+        private ILogger _logger;
+
+        public Censor(ICensorshipApi censorshipApi, ILogger logger)
         {
+            Console.WriteLine("tu konstruktor Censora");
+
             _censorshipApi = censorshipApi;
-            if (_censorshipApi == null)
-            {
-                _censorshipApi = new CensorshipApi();
-            }
+
+            _logger = logger;
         }
 
         public bool IsAcceptable(string text)
         {
-            bool isValidExternal = _censorshipApi.IsValid(text);
+            bool? isValidExternal = null;
 
-            return isValidExternal && _badWords.Any(text.Contains);
+            if (_acceptedTextsCache.Contains(text))
+            {
+                isValidExternal = true;
+            }
+
+            if (!isValidExternal.HasValue)
+            {
+                try
+                {
+                    isValidExternal = _censorshipApi.IsValid(text);
+                }
+                catch (Exception e)
+                {
+                    _logger.Error("nie mogę się połączyć z serwisem censorship");
+                }
+            }
+
+            if (isValidExternal.Value == true)
+            {
+                _acceptedTextsCache.Add(text);
+            }
+
+            return isValidExternal.Value && _badWords.Any(text.Contains);
         }
     }
 }

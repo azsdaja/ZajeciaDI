@@ -8,13 +8,9 @@ namespace ZajeciaDi
 
         private ICensor _censor;
 
-        public FacebookService(ICensor censor = null)
+        public FacebookService(ICensor censor)
         {
             _censor = censor;
-            if (_censor == null)
-            {
-                _censor = new Censor();
-            }
         }
 
         public void Register(Person person)
